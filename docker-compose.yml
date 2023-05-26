@@ -1,0 +1,38 @@
+version: '3'
+volumes:
+  mongo_data:
+  app_data:
+  mosquitto_data:
+  mosquitto_log:
+
+services:
+  mqtt-broker:
+    image: eclipse-mosquitto:2
+    ports:
+      - 1883:1883
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_log:/mosquitto/log
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - app_data:/app
+    environment:
+      - MONGO_HOST=mongodb
+      - MQTT_HOST=mqtt-broker
+    depends_on:
+      - mongodb
+      - mqtt-broker
+
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+

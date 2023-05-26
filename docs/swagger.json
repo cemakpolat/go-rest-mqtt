@@ -1,0 +1,201 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/measurements": {
+            "get": {
+                "description": "Retrieves the CPU and RAM usage in percentages",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Measurements"
+                ],
+                "summary": "Get CPU and RAM usage",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.Measurement"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new measurement record",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create a new measurement",
+                "parameters": [
+                    {
+                        "description": "Measurement object to be created",
+                        "name": "measurement",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Measurement"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Measurement created successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/measurements/{id}": {
+            "get": {
+                "description": "Get a measurement record by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a measurement by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Measurement ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Measurement object",
+                        "schema": {
+                            "$ref": "#/definitions/main.Measurement"
+                        }
+                    },
+                    "404": {
+                        "description": "Measurement not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a measurement record by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Update a measurement",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Measurement ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Measurement object to be updated",
+                        "name": "measurement",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Measurement"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Measurement updated successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a measurement record by ID",
+                "summary": "Delete a measurement",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Measurement ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Measurement deleted successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "main.Measurement": {
+            "type": "object",
+            "properties": {
+                "cpu": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "ram": {
+                    "type": "number"
+                },
+                "timestamp": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

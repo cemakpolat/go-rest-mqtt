@@ -1,0 +1,131 @@
+definitions:
+  main.Measurement:
+    properties:
+      cpu:
+        type: number
+      id:
+        type: string
+      ram:
+        type: number
+      timestamp:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /measurements:
+    get:
+      description: Retrieves the CPU and RAM usage in percentages
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Measurement'
+      summary: Get CPU and RAM usage
+      tags:
+      - Measurements
+    post:
+      consumes:
+      - application/json
+      description: Create a new measurement record
+      parameters:
+      - description: Measurement object to be created
+        in: body
+        name: measurement
+        required: true
+        schema:
+          $ref: '#/definitions/main.Measurement'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Measurement created successfully
+          schema:
+            type: string
+        "400":
+          description: Bad request
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Create a new measurement
+  /measurements/{id}:
+    delete:
+      description: Delete a measurement record by ID
+      parameters:
+      - description: Measurement ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Measurement deleted successfully
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Delete a measurement
+    get:
+      description: Get a measurement record by ID
+      parameters:
+      - description: Measurement ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Measurement object
+          schema:
+            $ref: '#/definitions/main.Measurement'
+        "404":
+          description: Measurement not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Get a measurement by ID
+    put:
+      consumes:
+      - application/json
+      description: Update a measurement record by ID
+      parameters:
+      - description: Measurement ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Measurement object to be updated
+        in: body
+        name: measurement
+        required: true
+        schema:
+          $ref: '#/definitions/main.Measurement'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Measurement updated successfully
+          schema:
+            type: string
+        "400":
+          description: Bad request
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Update a measurement
+swagger: "2.0"
